@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset = "utf-8">
+        <meta name = "viewport" content = "width = device-width, initial-scale=1, shrink-to-fit=no">
+        <title> Login</title>
+    </head>
+
+    <body>
+        <h1> Cadastrar Dados </h1>
+        <!-- cnpj, nome, email, telefone, rua, bairro, numero do estabelecimento !-->
+        <form action = "cadastro_empresa.php" method = "post">
+            <fieldset>
+                    <h3>Dados do Supermercado</h3>
+                    <div>
+                        <label for = "cnpj"><strong> CNPJ: </strong></label>
+                        <input type = "text" id = "cnpj" name = "cnpj" required/>
+                    </div>
+
+                    <div>
+                        <label for = "nome"><strong> Nome: </strong></label>
+                        <input type = "text" id = "nome" name = "nome" required/>
+                    </div>
+
+                    <div>
+                        <label for = "email"><strong> E-mail: </strong></label>
+                        <input type = "email" id = "email" name = "email" required/>
+                    </div>
+
+                    <div>
+                        <label for = "telefone"><strong> Telefone: </strong></label>
+                        <input type = "number" id = "telefone" name = "telefone" required/>
+                    </div>
+                    <h3>Endereço do Supermercado</h3>
+
+                    <div>
+                        <label for = "rua"><strong> Rua: </strong></label>
+                        <input type = "text" id = "rua" name = "rua" required/>
+                    </div>
+
+                    <div>
+                        <label for = "Bairro"><strong> Bairro: </strong></label>
+                        <input type = "text" id = "bairro" name = "bairro" required/>
+                    </div>
+
+                    <div>
+                        <label for = "numero_estabelecimento"><strong> N°: </strong></label>
+                        <input type = "number" id = "numero_estabelecimento" name = "numero_estabelecimento" required/>
+                    </div>
+                    <input type = "submit" value = "Cadastrar"/>
+            </fieldset>
+        </form>
+
+    <hr>
+
+        <h1> Deletar Dados </h1>
+        <form action = "deletar.php" method = "post">
+            <fieldset>
+                <div>
+                    <label for = "cnpj"><strong> CNPJ: </strong></label>
+                    <input type = "text" id = "cnpj" name = "cnpj" required/>
+                </div>
+                <input type = "submit" value = "Deletar"/>
+            </fieldset>
+        </form>
+
+    <hr>
+    
+        <h2> <a href = "visualizar.php"> Clique aqui para ver os dados </a> </h2>
+
+    <hr>
+
+        <h1>Atualizar Dados</h1>
+         <!-- cnpj, nome, email, telefone, rua, bairro, numero do estabelecimento !-->
+        <form action = "atualizar.php" method = "post">
+            <fieldset>
+                <div>
+                    CNPJ: <input type = "text" name = "cnpj" required/><br>
+                    <label for = "novo_nome"> Novo Nome: </label>
+                    <input type = "text" id = "novo_nome" name = "novo_nome"/>
+                </div>
+
+                <div>
+                    <label for = "novo_email"> Novo Email: </label>
+                    <input type = "text" id = "novo_email" name = "novo_email"/>
+                </div>
+
+                <div>
+                    <label for = "novo_telefone"> Novo Telefone: </label>
+                    <input type = "number" id = "novo_telefone" name = "novo_telefone"/>
+                </div>
+
+                <div>
+                    <label for = "nova_rua"> Nova Rua: </label>
+                    <input type = "text" id = "nova_rua" name = "nova_rua"/>
+                </div>
+
+                <div>
+                    <label for = "novo_bairro"> Novo Bairro </label>
+                    <input type = "text" id = "novo_bairro" name = "novo_bairro"/>
+                </div>
+
+                <div>
+                    <label for = "novo_numero"> Novo N° </label>
+                    <input type = "number" id = "novo_numero" name = "novo_numero"/> 
+                </div>
+                <input type = "submit" value = "Atualizar">
+            </fieldset>
+        </form>
+    </body>
+</html>
