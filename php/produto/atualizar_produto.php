@@ -1,8 +1,6 @@
 <?php
 
 #codigo, nome, data de validade, marca, preço, garantia, estoque
-
-
 $codigo = $_POST["codigo"];
 $novo_nome = $_POST["novo_nome"];
 $nova_data_validade = $_POST["nova_data_validade"];

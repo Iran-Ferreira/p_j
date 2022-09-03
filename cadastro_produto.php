@@ -1,5 +1,41 @@
+<?php
+if(isset($_POST['submit'])){
+    $codigo = $_POST["codigo"];
+    $nome = $_POST["nome"];
+    $validade = $_POST["validade"];
+    $marca = $_POST["marca"];
+    $preco = $_POST["preco"];
+    $garantia = $_POST["garantia"];
+    $estoque = $_POST["estoque"];
+    # Tabela produto codigo, nome, validade, marca, preco, garantia e estoque
+
+    $host = "localhost";
+    $database = "projeto";
+    $username = "root";
+    $password = "root";
+
+    $conexao = mysqli_connect($host, $username, $password, $database);
+
+    if(!$conexao){
+        die("Conexão Falhou");
+    }
+
+    $sql = "INSERT INTO produto VALUES ('$codigo', '$nome', '$validade', '$marca', '$preco', '$garantia', 
+    '$estoque')";
+
+
+    if(mysqli_query($conexao, $sql)){
+        echo "Inserido com Sucesso";
+    }
+
+    mysqli_close($conexao);
+
+    header("location:cadastro_produto.php");
+}
+?>
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 
 <head>
   <!-- Basic -->
@@ -34,21 +70,22 @@
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="sub_page">
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
         <div class="top_contact-container">
-          <div class="social-container">
-
+          <div class="tel_container">
           </div>
-            
+          <div class="social-container"> 
+          </div>
         </div>
       </div>
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
           <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="">
             <span>
               PreçoBOM Parelhas
             </span>
@@ -79,7 +116,7 @@
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.php">
+                <a href="login.html">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -93,104 +130,71 @@
       </div>
     </header>
     <!-- end header section -->
-    <!-- slider section -->
-    <section class=" slider_section position-relative">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      Bem vindo ao <br>
-                      <span>
-                        Comparador de preços
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-            
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      depois colocar <br>
-                      <span>
-                        alguma
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-
-
-    </section>
-    <!-- end slider section -->
   </div>
 
 
-  <!-- discount section -->
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="custom_heading-container ">
+        <h2>
+          Página de Cadastro
+        </h2>
+      </div>
 
-  <section class="discount_section">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-3 col-md-5 offset-md-2">
-          <div class="detail-box">
-            <h2>
-              Pesquise qualquer produto
-              dos mecardos/lojas de Parelhas <br>
-              <span>
-                e você encontrara o menor preço
-              </span>
+      <div class="img-box">
+      </div>
+      <div class="detail-box">
+        
+        <form action="cadastro_produto.php" method="post">
+            <fieldset>
+                    <h3>Cadastrar Produtos</h3>
+                    <div>
+                      <label for="codigo"><strong> Código: </strong></label>
+                      <input type="number" id="codigo" name="codigo" required/>
+                    </div>
 
-            </h2>
-            <p>
-              
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-7 col-md-5">
-          <div class="img-box">
-          </div>
+                    <div>
+                      <label for="nome"><strong> Nome: </strong></label>
+                      <input type="text" id="nome" name="nome" required/>
+                    </div>
+
+                    <div>
+                      <label for="validade"><strong> Data de Validade: </strong></label>
+                      <input type="date" id="validade" name="validade" required/>
+                    </div>
+
+                    <div>
+                      <label for="marca"><strong> Marca: </strong></label>
+                      <input type="text" id="marca" name="marca" required/>
+                    </div>
+
+                    <div>
+                      <label for="preco"><strong> Preço: </strong></label>
+                      <input type="number" id="preco" name="preco" required/>
+                    </div>
+
+                    <div>
+                      <label for="garantia"><strong> Garantia: </strong></label>
+                      <input type="date" id="garantia" name="garantia" required/>
+                    </div>
+
+                    <div>
+                      <label for="estoque"><strong> Estoque: </strong></label>
+                      <input type="estoque" id="estoque" name="estoque" required/>
+                    </div>
+                    <input type = "submit" value = "Cadastrar" id="submit" name="submit"/>
+            </fieldset>
+        </form>
+
+        <div class="d-flex">
+                <a href="sistema_produto.php" class="btn btn-danger me-5">Voltar</a>
         </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- info section -->
   <section class="info_section layout_padding2">
@@ -239,13 +243,13 @@
                 <a class="nav-link" href="contact.html">Contate a gente</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="visualizar_produto.php"> Visualizar Ofertas </a>  
+                <a class="nav-link" href="visualizar.php"> Visualizar Ofertas </a>  
               </li>
-            </ul>
+              </ul>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="info_news">
+          <div class="info_menu">
             <h4>
               Projeto Integrador
             </h4>
@@ -256,7 +260,7 @@
                 </span>
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Rafael Castro de Souza
                   </span>
@@ -268,7 +272,7 @@
                 Alunos
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Iran Ferreira dos Santos
                   </span>

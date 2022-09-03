@@ -1,6 +1,29 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<?php
+$host = "localhost";
+$database = "projeto";
+$username = "root";
+$password = "root";
+$conexao = mysqli_connect($host, $username, $password, $database);
+session_start();
+if((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)){
 
+  unset($_SESSION['email']);
+  unset($_SESSION['senha']);
+  header('Location: login.php');
+}
+$logado = $_SESSION['email'];
+if(!empty($_GET['search'])){
+        $data = $_GET['search'];
+        $sql = "SELECT * FROM produto WHERE nome LIKE '%$data%' ORDER BY preco ASC";
+
+}else{
+        $sql = "SELECT * FROM produto ORDER BY codigo DESC";
+}
+$resultado = mysqli_query($conexao, $sql);
+?>
+
+<!DOCTYPE html>
+<html>
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -14,6 +37,7 @@
 
   <title>Medion</title>
 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <!-- slider stylesheet -->
   <link rel="stylesheet" type="text/css"
     href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
@@ -31,24 +55,31 @@
   <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
   <!-- responsive style -->
-  <link href="css/responsive.css" rel="stylesheet" />
+  <link href="css/responsive.css" rel="stylesheet"/>
+  <style>
+    .box-search{
+      display: flex;
+      gap: 1%;
+    }
+  </style>
 </head>
 
-<body>
+<body class="sub_page">
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
         <div class="top_contact-container">
-          <div class="social-container">
-
+          <div class="tel_container">
           </div>
-            
+          <div class="social-container"> 
+          </div>
         </div>
       </div>
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
           <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="">
             <span>
               PreçoBOM Parelhas
             </span>
@@ -74,12 +105,8 @@
                   <a class="nav-link" href="visualizar_produto.php">Visualizar Ofertas</a>
                 </li>
               </ul>
-              <form class="form-inline ">
-                <input type="search" placeholder="Pesquisar">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.php">
+                <a href="login.html">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -93,104 +120,80 @@
       </div>
     </header>
     <!-- end header section -->
-    <!-- slider section -->
-    <section class=" slider_section position-relative">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      Bem vindo ao <br>
-                      <span>
-                        Comparador de preços
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-            
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      depois colocar <br>
-                      <span>
-                        alguma
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-
-
-    </section>
-    <!-- end slider section -->
   </div>
 
 
-  <!-- discount section -->
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="custom_heading-container ">
+        <h2>
+          Sistema produtos
+        </h2>
+      </div>
 
-  <section class="discount_section">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-3 col-md-5 offset-md-2">
-          <div class="detail-box">
-            <h2>
-              Pesquise qualquer produto
-              dos mecardos/lojas de Parelhas <br>
-              <span>
-                e você encontrara o menor preço
-              </span>
-
-            </h2>
-            <p>
-              
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-7 col-md-5">
-          <div class="img-box">
-          </div>
-        </div>
+      <div class="box-search">
+        <input type="search" class="form-control w-100" placeholder="Pesquisar" id="pesquisar">
+        <button onclick="searchData()" class="btn btn-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+        </button>
+      </div>
+      <div class="detail-box">
+            <div class="m-5">
+                <table class="table text-dark table-bg">
+                    <thead>
+                        <tr>
+                            <th scope="col">Código</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Data de Validade</th>
+                            <th scope="col">Marca</th>
+                            <th scope="col">Preço</th>
+                            <th scope="col">Estoque</th>
+                            <th scope="col"> Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            while($user_data = mysqli_fetch_assoc($resultado)) {
+                                echo "<tr>";
+                                echo "<td>".$user_data['codigo']."</td>";
+                                echo "<td>".$user_data['nome']."</td>";
+                                echo "<td>".$user_data['validade']."</td>";
+                                echo "<td>".$user_data['marca']."</td>";
+                                echo "<td>".$user_data['preco']."</td>";
+                                echo "<td>".$user_data['estoque']."</td>";
+                                echo "<td> 
+                                        <a class='btn btn-sm btn-primary' href='editar_produto.php?codigo=$user_data[codigo]' title='Editar'>
+                                            <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+                                                <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
+                                            </svg>
+                                        </a>
+                                        <a class='btn btn-sm btn-danger' href='delete_produto.php?codigo=$user_data[codigo]' title='Deletar'>
+                                          <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-trash-fill' viewBox='0 0 16 16'>
+                                            <path d='M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z'/>
+                                          </svg>
+                                        </a>
+                                      </td>"; 
+                                echo "<td>";
+                            }
+                            ?>
+                    </tbody>
+                </table>
+            </div>
+      
+            <div class="d-flex">
+                <a href="cadastro_produto.php" class="btn btn-danger me-5">Adicionar Produtos</a>
+            </div>
+            <div class="d-flex">
+                <a href="sistema.php" class="btn btn-danger me-5">Voltar</a>
+            </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- info section -->
   <section class="info_section layout_padding2">
@@ -239,13 +242,13 @@
                 <a class="nav-link" href="contact.html">Contate a gente</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="visualizar_produto.php"> Visualizar Ofertas </a>  
+                <a class="nav-link" href="visualizar.php"> Visualizar Ofertas </a>  
               </li>
-            </ul>
+              </ul>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="info_news">
+          <div class="info_menu">
             <h4>
               Projeto Integrador
             </h4>
@@ -256,7 +259,7 @@
                 </span>
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Rafael Castro de Souza
                   </span>
@@ -268,7 +271,7 @@
                 Alunos
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Iran Ferreira dos Santos
                   </span>
@@ -349,5 +352,19 @@
     });
   </script>
 </body>
+<script>
+    var search = document.getElementById('pesquisar');
 
+    search.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") 
+        {
+            searchData();
+        }
+    });
+
+    function searchData()
+    {
+        window.location = 'sistema_produto.php?search='+search.value;
+    }
+</script>
 </html>

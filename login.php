@@ -1,5 +1,43 @@
+<?php
+#Essa página será responsável por tratar as informações inseridas 
+#na página de login e verificar se o usuário inseriu as informações 
+#corretas, e logo em seguida redirecioná-lo.
+if(isset($_POST["submit"])){
+    $email = $_POST["email"];
+    $cadastrar = $_POST["submit"];
+    $senha = md5($_POST["senha"]);
+
+    $host = "localhost";
+    $database = "projeto";
+    $username = "root";
+    $password = "root";
+
+    $conexao = mysqli_connect($host, $username, $password, $database);
+    $sql = "SELECT * FROM usuarios WHERE email = '$email' AND senha = '$senha'" or die("Erro ao selecionar");
+    session_start();
+    if(isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['senha'])){
+
+        $result = mysqli_query($conexao, $sql);
+
+            if (mysqli_num_rows($result) < 1){
+                unset($_SESSION['email']);
+                unset($_SESSION['senha']);
+                echo"<script language='javascript' type='text/javascript'>
+                alert('Não existe'); window.location.href='login.php'</script>";
+            }else{
+                $_SESSION['email'] = $email;
+                $_SESSION['senha'] = $senha;
+                header('Location: sistema.php');
+            }
+
+        }else{
+            header('Location: login.php');
+        }
+}
+?>
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 
 <head>
   <!-- Basic -->
@@ -21,7 +59,7 @@
   <!-- font awesome style -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+  
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
@@ -34,21 +72,22 @@
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="sub_page">
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
         <div class="top_contact-container">
-          <div class="social-container">
-
+          <div class="tel_container">
           </div>
-            
+          <div class="social-container"> 
+          </div>
         </div>
       </div>
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
           <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="">
             <span>
               PreçoBOM Parelhas
             </span>
@@ -79,7 +118,7 @@
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.php">
+                <a href="login.html">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -93,104 +132,35 @@
       </div>
     </header>
     <!-- end header section -->
-    <!-- slider section -->
-    <section class=" slider_section position-relative">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      Bem vindo ao <br>
-                      <span>
-                        Comparador de preços
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-            
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      depois colocar <br>
-                      <span>
-                        alguma
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-
-
-    </section>
-    <!-- end slider section -->
   </div>
 
 
-  <!-- discount section -->
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="custom_heading-container ">
+        <h2>
+          Página de Login
+        </h2>
+      </div>
 
-  <section class="discount_section">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-3 col-md-5 offset-md-2">
-          <div class="detail-box">
-            <h2>
-              Pesquise qualquer produto
-              dos mecardos/lojas de Parelhas <br>
-              <span>
-                e você encontrara o menor preço
-              </span>
-
-            </h2>
-            <p>
-              
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-7 col-md-5">
-          <div class="img-box">
-          </div>
-        </div>
+      <div class="img-box">
+      </div>
+      <div class="detail-box">
+        
+        <form action="login.php" method="post">
+          <label for="email">E-mail: </label>
+          <input type="text" id="email" name="email"/>
+          <label for="senha">Senha: </label>
+          <input type="password" id="senha" name="senha"/>
+          <input type="submit" value="Cadastrar" id="submit" name="submit">
+          <a href="cadastro_login.php"> Criar conta</a>
+        </form>
       </div>
     </div>
   </section>
+
+
 
   <!-- info section -->
   <section class="info_section layout_padding2">
@@ -239,15 +209,15 @@
                 <a class="nav-link" href="contact.html">Contate a gente</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="visualizar_produto.php"> Visualizar Ofertas </a>  
+                <a class="nav-link" href="visualizar.php"> Visualizar Ofertas </a>  
               </li>
-            </ul>
+              </ul>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="info_news">
+          <div class="info_menu">
             <h4>
-              Projeto Integrador
+             Projeto Integrador
             </h4>
             <ul class="navbar-nav">
               <li>
@@ -256,7 +226,7 @@
                 </span>
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Rafael Castro de Souza
                   </span>
@@ -265,10 +235,12 @@
             </ul>
             <ul class="navbar-nav">
               <li>
-                Alunos
+                <span>
+                  alunos
+                </span>
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Iran Ferreira dos Santos
                   </span>
@@ -287,8 +259,6 @@
             </ul>
           </div>
         </div>
-      </div>
-    </div>
   </section>
 
 

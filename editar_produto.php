@@ -1,5 +1,37 @@
+<?php
+
+$host = "localhost";
+$database = "projeto";
+$username = "root";
+$password = "root";
+$conexao = mysqli_connect($host, $username, $password, $database);
+
+if(!empty($_GET["codigo"])){
+    
+    $codigo = $_GET['codigo'];
+    $sqlselect = "SELECT * FROM produto WHERE codigo = $codigo";
+    $result = $conexao->query($sqlselect);
+    if($result->num_rows > 0){
+
+        while($user_data = mysqli_fetch_assoc($result)){
+            $codigo = $user_data['codigo'];
+            $nome = $user_data['nome'];
+            $validade = $user_data['validade'];
+            $marca = $user_data['marca'];
+            $preco = $user_data['preco'];
+            $garantia = $user_data['garantia'];
+            $estoque = $user_data['estoque'];
+        }
+
+  }else{
+    header("Location: sistema.php");
+  }
+}
+
+?>
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 
 <head>
   <!-- Basic -->
@@ -34,21 +66,22 @@
   <link href="css/responsive.css" rel="stylesheet" />
 </head>
 
-<body>
+<body class="sub_page">
   <div class="hero_area">
     <!-- header section strats -->
     <header class="header_section">
       <div class="container">
         <div class="top_contact-container">
-          <div class="social-container">
-
+          <div class="tel_container">
           </div>
-            
+          <div class="social-container"> 
+          </div>
         </div>
       </div>
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container pt-3">
           <a class="navbar-brand" href="index.html">
+            <img src="images/logo.png" alt="">
             <span>
               PreçoBOM Parelhas
             </span>
@@ -79,7 +112,7 @@
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.php">
+                <a href="login.html">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -93,104 +126,72 @@
       </div>
     </header>
     <!-- end header section -->
-    <!-- slider section -->
-    <section class=" slider_section position-relative">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      Bem vindo ao <br>
-                      <span>
-                        Comparador de preços
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="carousel-item">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4">
-                  <div class="img-box">
-            
-                  </div>
-                </div>
-                <div class="col-md-8">
-                  <div class="detail-box">
-                    <h1>
-                      depois colocar <br>
-                      <span>
-                        alguma
-                      </span>
-
-                    </h1>
-                    <p>
-                      TEXTAO
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-          <span class="sr-only">Next</span>
-        </a>
-      </div>
-
-
-    </section>
-    <!-- end slider section -->
   </div>
 
 
-  <!-- discount section -->
-
-  <section class="discount_section">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-3 col-md-5 offset-md-2">
-          <div class="detail-box">
-            <h2>
-              Pesquise qualquer produto
-              dos mecardos/lojas de Parelhas <br>
-              <span>
-                e você encontrara o menor preço
-              </span>
-
-            </h2>
-            <p>
-              
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-7 col-md-5">
-          <div class="img-box">
-          </div>
-        </div>
+  <!-- about section -->
+  <section class="about_section layout_padding">
+    <div class="container">
+      <div class="custom_heading-container ">
+        <h2>
+          Editar Produtos
+        </h2>
       </div>
+
+      <div class="img-box">
+      </div>
+        <div class="detail-box">
+            <form action="saveEdit.php" method="post">
+                <fieldset>
+                    <h3>Edite seus Produtos</h3>
+                    <div>
+                        <label for="codigo"><strong> Código: </strong></label>
+                        <input type="number" id="codigo" name="codigo" value="<?php echo $codigo;?>" required/>
+                    </div>
+
+                    <div>
+                        <label for="nome"><strong> Nome: </strong></label>
+                        <input type="text" id="nome" name="nome" value="<?php echo $nome;?>" required/>
+                    </div>
+
+                    <div>
+                        <label for="validade"><strong> Data de Validade: </strong></label>
+                        <input type="date" id="validade" name="validade" value="<?php echo $validade;?>" required/>
+                    </div>
+
+                    <div>
+                        <label for="marca"><strong> Marca: </strong></label>
+                        <input type="text" id="marca" name="marca" value="<?php echo $marca;?>" required/>
+                    </div>
+
+                    <div>
+                        <label for="preco"><strong> Preço: </strong></label>
+                        <input type="number" id="preco" name="preco" value="<?php echo $preco;?>"required/>
+                    </div>
+
+                    <div>
+                        <label for="garantia"><strong> Garantia: </strong></label>
+                        <input type="date" id="garantia" name="garantia" value="<?php echo $garantia?>" required/>
+                    </div>
+
+                    <div>
+                        <label for="estoque"><strong> Estoque: </strong></label>
+                        <input type="number" id="estoque" name="estoque" value="<?php echo $estoque;?>"  required/>
+                    </div>
+                        <input type="hidden" name="codigo" value="<?php echo $codigo;?>">
+                        <input type = "submit" value = "Atualizar" id="update" name="update"/>
+                </fieldset>
+            </form>
+
+        
+            <div class="d-flex">
+                <a href="sistema_produto.php" class="btn btn-danger me-5">Voltar</a>
+            </div>
+        </div>
     </div>
   </section>
+
+
 
   <!-- info section -->
   <section class="info_section layout_padding2">
@@ -239,13 +240,13 @@
                 <a class="nav-link" href="contact.html">Contate a gente</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="visualizar_produto.php"> Visualizar Ofertas </a>  
+                <a class="nav-link" href="visualizar.php"> Visualizar Ofertas </a>  
               </li>
-            </ul>
+              </ul>
           </div>
         </div>
         <div class="col-md-6">
-          <div class="info_news">
+          <div class="info_menu">
             <h4>
               Projeto Integrador
             </h4>
@@ -256,7 +257,7 @@
                 </span>
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Rafael Castro de Souza
                   </span>
@@ -268,7 +269,7 @@
                 Alunos
               </li>
               <ul>
-                <li class="nav-item">
+                <li>
                   <span>
                     Iran Ferreira dos Santos
                   </span>
