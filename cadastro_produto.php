@@ -116,7 +116,7 @@ if(isset($_POST['submit'])){
                 <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
               </form>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.html">
+                <a href="login.php">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -262,7 +262,7 @@ if(isset($_POST['submit'])){
               <ul>
                 <li>
                   <span>
-                    Rafael Castro de Souza
+                    Andouglas Gonçalves da Silva Junior
                   </span>
                 </li>
               </ul>

@@ -106,7 +106,7 @@ $resultado = mysqli_query($conexao, $sql);
                 </li>
               </ul>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.html">
+                <a href="login.php">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -242,7 +242,7 @@ $resultado = mysqli_query($conexao, $sql);
                 <a class="nav-link" href="contact.html">Contate a gente</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="visualizar.php"> Visualizar Ofertas </a>  
+                <a class="nav-link" href="visualizar_produto.php"> Visualizar Ofertas </a>  
               </li>
               </ul>
           </div>
@@ -261,7 +261,7 @@ $resultado = mysqli_query($conexao, $sql);
               <ul>
                 <li>
                   <span>
-                    Rafael Castro de Souza
+                    Andouglas Gonçalves da Silva Junior
                   </span>
                 </li>
               </ul>

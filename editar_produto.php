@@ -107,12 +107,8 @@ if(!empty($_GET["codigo"])){
                   <a class="nav-link" href="visualizar_produto.php">Visualizar Ofertas</a>
                 </li>
               </ul>
-              <form class="form-inline ">
-                <input type="search" placeholder="Pesquisar">
-                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-              </form>
               <div class="login_btn-contanier ml-0 ml-lg-5">
-                <a href="login.html">
+                <a href="login.php">
                   <img src="images/user.png" alt="">
                   <span>
                     Login
@@ -141,7 +137,7 @@ if(!empty($_GET["codigo"])){
       <div class="img-box">
       </div>
         <div class="detail-box">
-            <form action="saveEdit.php" method="post">
+            <form action="saveProduto.php" method="post">
                 <fieldset>
                     <h3>Edite seus Produtos</h3>
                     <div>
@@ -259,7 +255,7 @@ if(!empty($_GET["codigo"])){
               <ul>
                 <li>
                   <span>
-                    Rafael Castro de Souza
+                    Andouglas Gonçalves da Silva Junior
                   </span>
                 </li>
               </ul>
